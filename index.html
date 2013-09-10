@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="Toolbar" >
+  <head>
+    <title>Linkstreak</title>    
+    
+    <link rel="stylesheet" href="http://angular-ui.github.io/ui-utils/assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="http://paulkinzett.github.com/toolbar/css/documentation.css" type="text/css">
+    <link rel="stylesheet" href="http://paulkinzett.github.com/toolbar/css/toolbars.css" type="text/css">
+    <link rel="stylesheet" href="http://paulkinzett.github.com/toolbar/css/bootstrap.icons.css" type="text/css">
+    <link rel="stylesheet" href="http://pinesframework.org/pnotify/jquery.pnotify.default.css" type="text/css">
+    <link rel="stylesheet" href="http://pinesframework.org/pnotify/jquery.pnotify.default.icons.css" type="text/css">
+
+    <script type="text/javascript" src="http://angular-ui.github.io/ui-utils/assets/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="http://paulkinzett.github.io/toolbar/js/jquery.toolbar.js"></script>
+    <script type="text/javascript" src="bootstrap-tooltip.js"></script>
+    <script type="text/javascript" src="http://pinesframework.org/pnotify/jquery.pnotify.js"></script>
+    <script type="text/javascript" src="http://angular-ui.github.io/ui-utils/assets/vendor/angular.min.js"></script>
+    <script type="text/javascript" src="jq.js"></script>
+      <script>
+    
+//angular.module('doc.ui-utils', ['ui.jq' ]);
+var App = angular.module('Toolbar', []);
+
+App.directive('toolbarTip', function() {
+  return {
+    // Restrict it to be an attribute in this case
+    restrict: 'A',
+    // responsible for registering DOM listeners as well as updating the DOM
+    link: function(scope, element, attrs) {
+        $(element).toolbar(scope.$eval(attrs.toolbarTip));
+    }
+  };
+});
+App.directive('pnotify', function() {
+  return {
+    // Restrict it to be an attribute in this case
+    restrict: 'A',
+    // responsible for registering DOM listeners as well as updating the DOM
+    link: function(scope, element, attrs) {
+        $.pnotify(scope.$eval(attrs.pnotify));
+    }
+  };
+});
+var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpos2": 25};
+function show_stack_bottomright(type) {
+      var opts = {
+        title: "Over Here",
+        text: "Check me out. I'm in a different stack.",
+        addclass: "stack-bottomright",
+        stack: stack_bottomright
+      };
+      switch (type) {
+        case 'error':
+          opts.title = "Oh No";
+          opts.text = "Watch out for that water tower!";
+          opts.type = "error";
+          break;
+        case 'info':
+          opts.title = "Breaking News";
+          opts.text = "Have you met Ted?";
+          opts.type = "info";
+          break;
+        case 'success':
+          opts.title = "Good News Everyone";
+          opts.text = "I've invented a device that bites shiny metal asses.";
+          opts.type = "success";
+          break;
+      }
+      $.pnotify(opts);
+    };
+
+  
+  </script>
+  <style type="text/css">
+
+.ui-pnotify.stack-bottomright {
+      /* These are just CSS default values to reset the pnotify CSS. */
+      right: auto;
+      top: auto;
+    }
+  </style>
+  </head>
+  <body>
+    <p>
+          <a title="Easiest. Binding. Ever!" ui-jq="tooltip" ui-options="{placement:'right'}">Hover over me for static Tooltip</a>
+        </p>
+
+<div id="format-toolbar1" class="settings-button" pnotify="{title: 'format-toolbar-options', text: 'top'}">
+  <img src="http://paulkinzett.github.com/toolbar/img/icon-cog-small.png">
+</div>
+
+<div id="format-toolbar1" class="settings-button" toolbar-tip="{content: '#format-toolbar-options', position: 'top'}">
+  <img src="http://paulkinzett.github.com/toolbar/img/icon-cog-small.png">
+</div>
+<!-- Our tooltip style toolbar -->
+<div id="format-toolbar-options">
+  <a href="#"><i class="icon-align-left"></i></a>
+  <a href="#"><i class="icon-align-center"></i></a>
+  <a href="#"><i class="icon-align-right"></i></a>
+</div>
+<input type="button" value="notify" onclick="show_stack_bottomright('success');"> 
+  </body>
+</html>

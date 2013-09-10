@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="ngLinkstreak" ng-controller="AppCtrl">
+  <head>
+    <title>Linkstreak</title>    
+    
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/bootstrap-responsive.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/dialpad.css" type="text/css">
+
+    <!-- compiled JS --><% scripts.forEach( function ( file ) { %>
+    <script type="text/javascript" src="<%= file %>"></script><% }); %>
+    
+  </head>
+  <body>
+    <div ui-view="main"></div>
+    <section id="footer"></section>
+    <div ng-include="'notifications.tpl.html'" class="container-fluid" ng-show="notifications.getCurrent().length"></div>
+    <flash-messages> </flash-messages>
+  </body>
+</html>
